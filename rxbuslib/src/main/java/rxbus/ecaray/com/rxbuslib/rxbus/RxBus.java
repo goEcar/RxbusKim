@@ -111,6 +111,15 @@ public class RxBus {
         return mSubject.asObservable().mergeWith(mStickySubject.asObservable());
     }
 
+    public SerializedSubject<RxBusEvent, RxBusEvent> get() {
+        return mSubject;
+    }
+
+    public boolean hasObservers() {
+        return mSubject.hasObservers();
+    }
+
+
     /**
      * 注册 RxBus
      * @param object
