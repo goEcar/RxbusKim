@@ -72,35 +72,7 @@ public class RxBus {
         post(event, DEFAULT_TAG);
     }
 
-    /**
-     * 发送一个 黏性事件，并标记该事件为 tag。同理，只有标记为 tag 的方法才能响应该 事件。
-     * 所谓 黏性事件 是指即使在该事件发送后才进行 注册RxBus 的组件，也能接收到该 事件
-     * 整个 RxBus 只能维持一个 黏性事件，最后发送的黏性事件会取代前面的事件。
-     * @param event
-     */
-    public void postSticky(Object event, String tag) {
-        if (mStickySubject != null) {
-            mStickySubject.onNext(new RxBusEvent(event, tag));
-        }
-    }
 
-    /**
-     * 发送一个默认tag的黏性事件
-     * @param event
-     */
-    public void postSticky(Object event) {
-        postSticky(event, DEFAULT_TAG);
-    }
-
-    /**
-     * 取消 黏性事件
-     * 黏性事件 可能存在着一些未知隐患，请谨慎使用。
-     * 建议发布黏性事件后，需要在合适的时机取消该 黏性事件
-     * ToDo: 下一版将以更合理的方式来取消黏性事件，并考虑支持维持多个黏性事件
-     */
-    public void cancelStickyEvent() {
-        mStickySubject = new SerializedSubject<>(ReplaySubject.<RxBusEvent>createWithSize(1));
-    }
 
     /**
      * 返回 事件发布者。
