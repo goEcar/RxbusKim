@@ -6,6 +6,7 @@ import android.util.ArrayMap;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 
 import rx.Observable;
 import rx.Scheduler;
@@ -27,13 +28,13 @@ public class RxBus {
 
     private SerializedSubject<RxBusEvent, RxBusEvent> mSubject;
     private SerializedSubject<RxBusEvent, RxBusEvent> mStickySubject;
-    private ArrayMap<String, CompositeSubscription> mSubscribeMapper;
+    private HashMap<String, CompositeSubscription> mSubscribeMapper;
 
     @SuppressLint("NewApi")
     private RxBus() {
         mSubject = new SerializedSubject<>(PublishSubject.<RxBusEvent>create());
         mStickySubject = new SerializedSubject<>(ReplaySubject.<RxBusEvent>createWithSize(1));
-        mSubscribeMapper = new ArrayMap<>();
+        mSubscribeMapper = new HashMap<>();
     }
 
     public static RxBus getDefault() {

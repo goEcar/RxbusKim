@@ -1,10 +1,10 @@
 package rxbus.ecaray.com.rxbuslib.rxbus;
 
 import android.support.annotation.StringDef;
-import android.util.ArrayMap;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.util.HashMap;
 
 import rx.Scheduler;
 import rx.android.schedulers.AndroidSchedulers;
@@ -16,7 +16,7 @@ import rx.schedulers.Schedulers;
  */
 public class RxBusScheduler {
 
-    private static ArrayMap<String, Scheduler> sSchedulersMapper;
+    private static HashMap<String, Scheduler> sSchedulersMapper;
 
     public static final String NEW_THREAD = "newThread";
     public static final String COMPUTATION = "computation";
@@ -31,7 +31,7 @@ public class RxBusScheduler {
     public @interface Theme {}
 
     static {
-        sSchedulersMapper = new ArrayMap<>();
+        sSchedulersMapper = new HashMap<>();
         sSchedulersMapper.put(NEW_THREAD, Schedulers.newThread());
         sSchedulersMapper.put(COMPUTATION, Schedulers.computation());
         sSchedulersMapper.put(IMMEDIATE, Schedulers.immediate());

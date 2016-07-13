@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="issues">
+    <option name="index">
+      <map>
+        <entry key="/Dummy.txt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/Desktop/DEMOS/rxflux/RxFlux-master/build.gradle">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/Desktop/DEMOS/rxflux/RxFlux-master/ecar-rxflux/build.gradle">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/Desktop/DEMOS/rxflux/RxFlux-master/ecar-rxflux/src/main/java/com/example/ecar_rxflux/action/RxActionCreator.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/Desktop/DEMOS/rxflux/RxFlux-master/ecar-rxflux/src/main/java/com/example/ecar_rxflux/dispatcher/Dispatcher.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/Desktop/DEMOS/rxflux/RxFlux-master/ecar-rxflux/src/main/java/com/example/ecar_rxflux/dispatcher/RxActionDispatch.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/Desktop/DEMOS/rxflux/RxFlux-master/ecar-rxflux/src/main/java/com/example/ecar_rxflux/store/RxStore.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/Desktop/DEMOS/rxflux/RxFlux-master/ecar-rxflux/src/main/java/com/example/ecar_rxflux/store/RxStoreChange.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/Desktop/DEMOS/rxflux/RxFlux-master/ecar-rxflux/src/main/java/com/example/ecar_rxflux/util/LoggerManager.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/Desktop/DEMOS/rxflux/RxFlux-master/rxflux/build.gradle">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/Desktop/DEMOS/rxflux/RxFlux-master/rxflux/src/main/AndroidManifest.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/Desktop/DEMOS/rxflux/RxFlux-master/rxflux/src/main/java/com/hardsoftstudio/rxflux/dispatcher/Dispatcher.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/Desktop/DEMOS/rxflux/RxFlux-master/rxflux/src/main/java/com/hardsoftstudio/rxflux/store/RxStoreChange.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/rxbus/ecaray/com/rxbuskim/MainActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/rxbuslib/src/main/java/rxbus/ecaray/com/rxbuslib/rxbus/RxBus.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/rxbuslib/src/main/java/rxbus/ecaray/com/rxbuslib/rxbus/RxBusScheduler.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../parkBees-andriod-studio/src/com/chmtech/parkbees/base/BaseEntity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../parkBees-andriod-studio/src/com/chmtech/parkbees/model/mImpl/MonCardModelImpl.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../parkBees-andriod-studio/src/com/chmtech/parkbees/network/DataCenter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../parkBees-andriod-studio/src/com/chmtech/parkbees/network/HttpUrl.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../parkBees-andriod-studio/src/com/chmtech/parkbees/utils/Consts.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../parkBees-andriod-studio/src/com/chmtech/parkbees/utils/JsonUtil.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../parkBees-andriod-studio/src/com/chmtech/parkbees/utils/TagUtil.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../sdn-studio/hellocharts-library/build.gradle">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../sdn-studio/hellocharts-library/src/lecho/lib/hellocharts/model/Axis.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
