@@ -2,7 +2,6 @@ package rxbus.ecaray.com.rxbuslib.rxbus;
 
 
 import android.annotation.SuppressLint;
-import android.util.ArrayMap;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -17,6 +16,7 @@ import rx.subjects.PublishSubject;
 import rx.subjects.ReplaySubject;
 import rx.subjects.SerializedSubject;
 import rx.subscriptions.CompositeSubscription;
+
 
 /**
  * Created by Jiashu on 2015/11/3.
@@ -105,6 +105,46 @@ public class RxBus {
             if (accept != null) {
                 final Class clazz = accept.clazz();
                 final String tag = accept.tag();
+                Scheduler observeScheduler = RxBusScheduler.getScheduler(accept.observeOn());
+                Scheduler subscribeScheduler = RxBusScheduler.getScheduler(accept.subscribeOn());
+                Subscription subscription = getObservable()
+                        .subscribeOn(subscribeScheduler)
+                        .filter(new Func1<RxBusEvent, Boolean>() {
+                            @Override
+                            public Boolean call(RxBusEvent rxBusType) {
+                                return clazz.equals(rxBusType.getObj().getClass()) &&
+                                        tag.equals(rxBusType.getTag());
+                            }
+                        })
+                        .observeOn(observeScheduler)
+                        .subscribe(new Action1<RxBusEvent>() {
+                            @Override
+                            public void call(RxBusEvent rxBusType) {
+                                try {
+                                    method.invoke(object, rxBusType.getObj());
+                                } catch (IllegalAccessException e) {
+                                    e.printStackTrace();
+                                } catch (InvocationTargetException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+
+                subscriptions.add(subscription);
+            }
+        }
+        mSubscribeMapper.put(object.getClass().getName(), subscriptions);
+    }
+    /**
+     * 注册 RxBus 。tag动态传而不使用自定义
+     */
+    @SuppressLint("NewApi")
+    public void register(final Object object,final String tag) {
+        CompositeSubscription subscriptions = new CompositeSubscription();
+        for (final Method method : object.getClass().getDeclaredMethods()) {
+            RxBusReact accept = method.getAnnotation(RxBusReact.class);
+            if (accept != null) {
+                final Class clazz = accept.clazz();
                 Scheduler observeScheduler = RxBusScheduler.getScheduler(accept.observeOn());
                 Scheduler subscribeScheduler = RxBusScheduler.getScheduler(accept.subscribeOn());
                 Subscription subscription = getObservable()
