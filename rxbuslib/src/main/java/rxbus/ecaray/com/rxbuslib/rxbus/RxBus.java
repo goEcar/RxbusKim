@@ -17,6 +17,7 @@ import rx.subjects.ReplaySubject;
 import rx.subjects.SerializedSubject;
 import rx.subscriptions.CompositeSubscription;
 
+import static android.R.attr.tag;
 
 /**
  * Created by Jiashu on 2015/11/3.
@@ -44,40 +45,84 @@ public class RxBus {
         return sBus;
     }
 
+
+    /**
+     * 发送一个事件，并标记该事件为 tag。只有指定为 tag 的地方才能响应该 事件,默认参数为Object。
+     *
+     * @param tag
+     */
+    public void post(String tag) {
+        if (mSubject != null) {
+            mSubject.onNext(new RxBusEvent(new Object[]{}, tag));
+        }
+    }
+    /**
+     * 发送空的事件  tag为默认tag
+     *
+     */
+    public void post() {
+        if (mSubject != null) {
+            mSubject.onNext(new RxBusEvent(new Object[]{}, DEFAULT_TAG));
+        }
+    }
+
+    /**
+     * 发送多个事件，该事件的标记为默认的tag
+     *
+     * @param event
+     */
+    public void post(Object[] event) {
+        post(DEFAULT_TAG, event);
+    }
+
+
     /**
      * 发送一个事件，并标记该事件为 tag。只有指定为 tag 的地方才能响应该 事件。
+     *
      * @param event
      * @param tag
      */
-    public void post(Object event, String tag) {
+    public void post(String tag, Object event) {
+        Object[] objs = new Object[]{event};
+        post(tag, objs);
+    }
+
+    /**
+     * 发送多个事件，并标记该事件为 tag。只有指定为 tag 的地方才能响应该 事件。
+     *
+     * @param event
+     * @param tag
+     */
+    public void post(String tag, Object[] event) {
         if (mSubject != null) {
             mSubject.onNext(new RxBusEvent(event, tag));
         }
     }
+
+
     /**
-     * 发送一个事件，并标记该事件为 tag。只有指定为 tag 的地方才能响应该 事件,默认参数为Object。
-     * @param event
+     * 发送一个默认tag事件，并标记该事件为 tag。只有指定为 tag 的地方才能响应该 事件,默认参数为Object。
+     *
      * @param tag
      */
-    public void post( String tag) {
-        if (mSubject != null) {
-            mSubject.onNext(new RxBusEvent(new Object(), tag));
-        }
+    public void postDefault(String tag) {
+        post(tag);
     }
 
     /**
      * 发送一个事件，该事件的标记为默认的tag
+     *
      * @param event
      */
     public void post(Object event) {
-        post(event, DEFAULT_TAG);
+        post(DEFAULT_TAG, event);
     }
-
 
 
     /**
      * 返回 事件发布者。
      * 熟悉 RxJava 的开发者可以通过本方法获取到 事件发布者，自定义事件响应策略。
+     *
      * @return
      */
     public Observable<RxBusEvent> getObservable() {
@@ -95,15 +140,16 @@ public class RxBus {
 
     /**
      * 注册 RxBus
+     *
      * @param object
      */
     @SuppressLint("NewApi")
     public void register(final Object object) {
         CompositeSubscription subscriptions = new CompositeSubscription();
-        for (final Method method: object.getClass().getDeclaredMethods()) {
+        for (final Method method : object.getClass().getDeclaredMethods()) {
             RxBusReact accept = method.getAnnotation(RxBusReact.class);
             if (accept != null) {
-                final Class clazz = accept.clazz();
+                final Class[] clazz = accept.clazz();
                 final String tag = accept.tag();
                 Scheduler observeScheduler = RxBusScheduler.getScheduler(accept.observeOn());
                 Scheduler subscribeScheduler = RxBusScheduler.getScheduler(accept.subscribeOn());
@@ -112,8 +158,9 @@ public class RxBus {
                         .filter(new Func1<RxBusEvent, Boolean>() {
                             @Override
                             public Boolean call(RxBusEvent rxBusType) {
-                                return clazz.equals(rxBusType.getObj().getClass()) &&
-                                        tag.equals(rxBusType.getTag());
+                                return (rxBusType.isThisClass(clazz) &&
+                                        tag.equals(rxBusType.getTag()));
+
                             }
                         })
                         .observeOn(observeScheduler)
@@ -121,10 +168,9 @@ public class RxBus {
                             @Override
                             public void call(RxBusEvent rxBusType) {
                                 try {
+
                                     method.invoke(object, rxBusType.getObj());
-                                } catch (IllegalAccessException e) {
-                                    e.printStackTrace();
-                                } catch (InvocationTargetException e) {
+                                } catch (Exception e) {
                                     e.printStackTrace();
                                 }
                             }
@@ -135,49 +181,11 @@ public class RxBus {
         }
         mSubscribeMapper.put(object.getClass().getName(), subscriptions);
     }
-    /**
-     * 注册 RxBus 。tag动态传而不使用自定义
-     */
-    @SuppressLint("NewApi")
-    public void register(final Object object,final String tag) {
-        CompositeSubscription subscriptions = new CompositeSubscription();
-        for (final Method method : object.getClass().getDeclaredMethods()) {
-            RxBusReact accept = method.getAnnotation(RxBusReact.class);
-            if (accept != null) {
-                final Class clazz = accept.clazz();
-                Scheduler observeScheduler = RxBusScheduler.getScheduler(accept.observeOn());
-                Scheduler subscribeScheduler = RxBusScheduler.getScheduler(accept.subscribeOn());
-                Subscription subscription = getObservable()
-                        .subscribeOn(subscribeScheduler)
-                        .filter(new Func1<RxBusEvent, Boolean>() {
-                            @Override
-                            public Boolean call(RxBusEvent rxBusType) {
-                                return clazz.equals(rxBusType.getObj().getClass()) &&
-                                        tag.equals(rxBusType.getTag());
-                            }
-                        })
-                        .observeOn(observeScheduler)
-                        .subscribe(new Action1<RxBusEvent>() {
-                            @Override
-                            public void call(RxBusEvent rxBusType) {
-                                try {
-                                    method.invoke(object, rxBusType.getObj());
-                                } catch (IllegalAccessException e) {
-                                    e.printStackTrace();
-                                } catch (InvocationTargetException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        });
 
-                subscriptions.add(subscription);
-            }
-        }
-        mSubscribeMapper.put(object.getClass().getName(), subscriptions);
-    }
 
     /**
      * 反注册 RxBus
+     *
      * @param object
      */
     @SuppressLint("NewApi")

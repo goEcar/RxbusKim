@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/RxbusKim.iml" filepath="$PROJECT_DIR$/RxbusKim.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RxbusKim20170609.iml" filepath="$PROJECT_DIR$/RxbusKim20170609.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/rxbuslib/rxbuslib.iml" filepath="$PROJECT_DIR$/rxbuslib/rxbuslib.iml" />
     </modules>

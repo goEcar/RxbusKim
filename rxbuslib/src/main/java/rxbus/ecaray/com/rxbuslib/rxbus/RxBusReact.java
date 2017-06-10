@@ -1,8 +1,6 @@
 package rxbus.ecaray.com.rxbuslib.rxbus;
 
 
-import android.support.annotation.NonNull;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -17,7 +15,8 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface RxBusReact {
-    @NonNull Class clazz();                                     // 事件实体的 Class对象
+
+    Class[] clazz() default {};                          // 事件实体的 Class对象
 
     String tag() default RxBus.DEFAULT_TAG;                     // 事件的标记
 
