@@ -176,7 +176,7 @@ public class RxBus {
                             public void call(RxBusEvent rxBusType) {
                                 try {
 
-                                    method.invoke(object, rxBusType.getObj());
+                                    method.invoke(object, rxBusType.getObj()[0]);
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
