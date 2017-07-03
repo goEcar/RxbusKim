@@ -76,16 +76,16 @@ public class RxBus {
     }
 
 
-    /**
-     * 发送一个事件，并标记该事件为 tag。只有指定为 tag 的地方才能响应该 事件。
-     *
-     * @param event
-     * @param tag
-     */
-    public void post(String tag, Object event) {
-        Object[] objs = new Object[]{event};
-        post(tag, objs);
-    }
+//    /**
+//     * 发送一个事件，并标记该事件为 tag。只有指定为 tag 的地方才能响应该 事件。
+//     *
+//     * @param event
+//     * @param tag
+//     */
+//    public void post(String tag, Object event) {
+//        Object[] objs = new Object[]{event};
+//        post(tag, objs);
+//    }
 
     /**
      * 发送多个事件，并标记该事件为 tag。只有指定为 tag 的地方才能响应该 事件。
@@ -116,14 +116,14 @@ public class RxBus {
         post(tag);
     }
 
-    /**
-     * 发送一个事件，该事件的标记为默认的tag
-     *
-     * @param event
-     */
-    public void post(Object event) {
-        post(DEFAULT_TAG, event);
-    }
+//    /**
+//     * 发送一个事件，该事件的标记为默认的tag
+//     *
+//     * @param event
+//     */
+//    public void post(Object event) {
+//        post(DEFAULT_TAG, event);
+//    }
 
 
     /**
