@@ -99,6 +99,13 @@ public class RxBus {
         }
     }
 
+    public void post(Object event, String tag) {
+        if(this.mSubject != null) {
+            Object[] objs = new Object[]{event};
+            this.mSubject.onNext(new RxBusEvent(objs, tag));
+        }
+    }
+
 
     /**
      * 发送一个默认tag事件，并标记该事件为 tag。只有指定为 tag 的地方才能响应该 事件,默认参数为Object。
