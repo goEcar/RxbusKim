@@ -182,6 +182,54 @@ public class RxBus {
         mSubscribeMapper.put(object.getClass().getName(), subscriptions);
     }
 
+    /**
+     * 注册 RxBus
+     *
+     * @param object
+     */
+    @SuppressLint("NewApi")
+    public void register(final Object object,boolean isonBackpressureLatest) {
+        CompositeSubscription subscriptions = new CompositeSubscription();
+        for (final Method method : object.getClass().getDeclaredMethods()) {
+            RxBusReact accept = method.getAnnotation(RxBusReact.class);
+            if (accept != null) {
+                final Class[] clazz = accept.clazz();
+                final String tag = accept.tag();
+                Scheduler observeScheduler = RxBusScheduler.getScheduler(accept.observeOn());
+                Scheduler subscribeScheduler = RxBusScheduler.getScheduler(accept.subscribeOn());
+                Observable<RxBusEvent> observable = getObservable();
+                if(isonBackpressureLatest){
+                    observable.onBackpressureLatest();
+                }
+                Subscription subscription = observable
+                        .subscribeOn(subscribeScheduler)
+                        .filter(new Func1<RxBusEvent, Boolean>() {
+                            @Override
+                            public Boolean call(RxBusEvent rxBusType) {
+                                return (rxBusType.isThisClass(clazz) &&
+                                        tag.equals(rxBusType.getTag()));
+
+                            }
+                        })
+                        .observeOn(observeScheduler)
+                        .subscribe(new Action1<RxBusEvent>() {
+                            @Override
+                            public void call(RxBusEvent rxBusType) {
+                                try {
+
+                                    method.invoke(object, rxBusType.getObj());
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+
+                subscriptions.add(subscription);
+            }
+        }
+        mSubscribeMapper.put(object.getClass().getName(), subscriptions);
+    }
+
 
     /**
      * 反注册 RxBus
